@@ -1,2 +1,2 @@
 django
-git==2.25.1
+git>=2
