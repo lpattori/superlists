@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models import constraints
 # Create your models here.
 
 
@@ -13,3 +14,14 @@ class Item(models.Model):
     text = models.TextField(default='')
     list = models.ForeignKey(List, default=None, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.text
+
+
+    class Meta:
+        ordering = ('id',)
+        # unique_together = ('list', 'text') # will be deprecated
+        constraints = [
+            models.UniqueConstraint(fields=['list', 'text'],
+                                    name= 'duplicate item')
+        ]
